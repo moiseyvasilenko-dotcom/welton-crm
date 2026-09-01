@@ -132,7 +132,7 @@ h2 { margin: 0; font-size: 15px; line-height: 20px; }
 .form-note { padding: 12px; }
 .form-note > span { display: block; margin-bottom: 8px; }
 .form-note textarea { min-height: 88px; resize: vertical; line-height: 21px; }
-.telegram .dialog-save { visibility: hidden; }
+.telegram .dialog-link { visibility: hidden; }
 .toast { position: fixed; z-index: 30; bottom: calc(78px + var(--safe-bottom)); left: 50%; max-width: calc(100% - 28px); padding: 9px 13px; transform: translateX(-50%); border-radius: 10px; background: color-mix(in srgb, var(--text) 92%, transparent); color: var(--bg); font-size: 13px; white-space: nowrap; box-shadow: 0 5px 18px #0003; }
 
 @keyframes sheet-in { from { transform: translateY(35%); opacity: .7; } to { transform: translateY(0); opacity: 1; } }

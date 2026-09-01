@@ -18,7 +18,7 @@ export class TelegramBridge {
     document.body.classList.add("telegram");
     tg.ready();
     tg.expand();
-    this.tryFullscreen();
+    try { if (tg.isFullscreen) tg.exitFullscreen?.(); } catch {}
     try { tg.disableVerticalSwipes?.(); } catch {}
     try { tg.setHeaderColor?.("bg_color"); } catch {}
     try { tg.setBackgroundColor?.("bg_color"); } catch {}
@@ -46,14 +46,6 @@ export class TelegramBridge {
       if (values.length) root.style.setProperty(property, `${Math.max(...values)}px`);
       else root.style.removeProperty(property);
     }
-  }
-
-  tryFullscreen() {
-    const tg = this.webApp;
-    if (!tg?.requestFullscreen) return;
-    try {
-      if (!tg.isVersionAtLeast || tg.isVersionAtLeast("8.0")) tg.requestFullscreen();
-    } catch {}
   }
 
   syncTheme() {
