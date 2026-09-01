@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>Welton CRM</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">WELTON</p>
+      <h1 id="pageTitle">CRM</h1>
+    </div>
+    <button class="icon-button" id="searchToggle" type="button" aria-label="Поиск">⌕</button>
+  </header>
+
+  <section class="search-panel" id="searchPanel" hidden>
+    <label class="field compact">
+      <span>Поиск</span>
+      <input id="searchInput" type="search" placeholder="Имя, телефон, сделка…" autocomplete="off">
+    </label>
+  </section>
+
+  <main id="content" aria-live="polite"></main>
+
+  <nav class="tabbar" aria-label="Разделы">
+    <button class="tab active" type="button" data-tab="home"><span>⌂</span><small>Главная</small></button>
+    <button class="tab" type="button" data-tab="clients"><span>♙</span><small>Клиенты</small></button>
+    <button class="tab" type="button" data-tab="deals"><span>◫</span><small>Сделки</small></button>
+    <button class="tab" type="button" data-tab="tasks"><span>✓</span><small>Задачи</small></button>
+  </nav>
+
+  <button id="fallbackMainButton" class="fallback-main" type="button">Добавить клиента</button>
+
+  <dialog id="editorDialog">
+    <form id="editorForm" method="dialog">
+      <div class="dialog-head">
+        <h2 id="dialogTitle">Новая запись</h2>
+        <button class="icon-button" value="cancel" formmethod="dialog" aria-label="Закрыть">×</button>
+      </div>
+      <div id="formFields"></div>
+      <div class="dialog-actions">
+        <button class="secondary" value="cancel" formmethod="dialog">Отмена</button>
+        <button class="primary" id="saveButton" value="default">Сохранить</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script src="./app.js"></script>
+</body>
+</html>
