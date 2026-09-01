@@ -100,7 +100,7 @@ h2 { margin: 0; font-size: 15px; line-height: 20px; }
 .empty-icon .icon { width: 30px; height: 30px; }
 .empty-state h2 { font-size: 17px; }
 
-.tabbar { position: fixed; z-index: 10; right: 0; bottom: 0; left: 0; display: grid; grid-template-columns: repeat(4, 1fr); max-width: 620px; min-height: calc(62px + var(--safe-bottom)); margin: auto; padding: 6px 4px var(--safe-bottom); border-top: .5px solid var(--separator); background: color-mix(in srgb, var(--bottom-bg) 92%, transparent); backdrop-filter: saturate(180%) blur(18px); -webkit-backdrop-filter: saturate(180%) blur(18px); }
+.tabbar { position: fixed; z-index: 10; right: 0; bottom: 0; left: 0; display: grid; grid-template-columns: repeat(4, 1fr); max-width: 620px; min-height: calc(62px + var(--safe-bottom)); margin: auto; padding: 6px 4px var(--safe-bottom); border-top: 1px solid var(--separator); background: var(--bottom-bg); }
 .tab { display: flex; min-width: 0; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 2px; border: 0; background: transparent; color: var(--hint); font-size: 10px; }
 .tab-icon { position: relative; display: grid; place-items: center; width: 30px; height: 25px; }
 .tab-icon .icon { width: 23px; height: 23px; stroke-width: 1.75; }
@@ -110,12 +110,10 @@ h2 { margin: 0; font-size: 15px; line-height: 20px; }
 .fallback-main .icon { width: 20px; height: 20px; }
 .telegram .fallback-main { display: none; }
 
-#editorDialog { width: min(100%, 620px); max-width: 620px; height: auto; max-height: calc(100dvh - var(--safe-top) - 10px); margin: auto auto 0; padding: 0; border: 0; border-radius: 16px 16px 0 0; background: var(--bg); color: var(--text); }
-#editorDialog::backdrop { background: rgb(0 0 0 / .42); }
-#editorDialog[open] { animation: sheet-in .24s cubic-bezier(.2,.8,.2,1); }
-#editorForm { min-width: 0; padding-bottom: calc(18px + var(--safe-bottom)); }
-.sheet-handle { width: 36px; height: 5px; margin: 7px auto 2px; border-radius: 3px; background: color-mix(in srgb, var(--hint) 38%, transparent); }
-.dialog-head { display: grid; grid-template-columns: 76px 1fr 76px; align-items: center; min-height: 50px; padding: 0 4px; }
+#editorDialog { inset: 0; width: min(100%, 620px); max-width: 620px; height: 100dvh; max-height: 100dvh; margin: 0 auto; padding: 0; overflow-y: auto; border: 0; border-radius: 0; background: var(--bg); color: var(--text); }
+#editorDialog::backdrop { background: var(--bg); }
+#editorForm { min-width: 0; min-height: 100%; padding-bottom: calc(18px + var(--safe-bottom)); }
+.dialog-head { position: sticky; top: 0; z-index: 2; display: grid; grid-template-columns: 76px 1fr 76px; align-items: center; min-height: 52px; padding: 0 4px; border-bottom: 1px solid var(--separator); background: var(--bg); }
 .dialog-head h2 { overflow: hidden; font-size: 16px; text-align: center; text-overflow: ellipsis; white-space: nowrap; }
 .dialog-link { height: 44px; padding: 0 8px; border: 0; background: transparent; color: var(--accent); font-size: 15px; }
 .dialog-save { font-weight: 600; text-align: right; }
@@ -135,7 +133,5 @@ h2 { margin: 0; font-size: 15px; line-height: 20px; }
 .telegram .dialog-link { visibility: hidden; }
 .toast { position: fixed; z-index: 30; bottom: calc(78px + var(--safe-bottom)); left: 50%; max-width: calc(100% - 28px); padding: 9px 13px; transform: translateX(-50%); border-radius: 10px; background: color-mix(in srgb, var(--text) 92%, transparent); color: var(--bg); font-size: 13px; white-space: nowrap; box-shadow: 0 5px 18px #0003; }
 
-@keyframes sheet-in { from { transform: translateY(35%); opacity: .7; } to { transform: translateY(0); opacity: 1; } }
 @media (max-width: 350px) { .app-shell { padding-inline: 9px; } .metrics { gap: 6px; } .metrics button { padding: 10px; } .balance-card small { display: none; } .form-row { grid-template-columns: 84px minmax(0,1fr); } }
-@media (min-width: 621px) { #editorDialog { margin-bottom: 12px; border-radius: 16px; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }
