@@ -5,9 +5,8 @@ function section(title, content, action = "") {
   return `<section class="content-section"><header class="section-head"><h2>${escapeHtml(title)}</h2>${action}</header>${content}</section>`;
 }
 
-function emptyState(title, text, showDemo = true) {
-  const action = showDemo ? '<button class="soft-button" type="button" data-action="demo">Показать концепт</button>' : "";
-  return `<div class="empty-state"><div class="empty-icon">${icon("inbox")}</div><h2>${escapeHtml(title)}</h2><p>${escapeHtml(text)}</p>${action}</div>`;
+function emptyState(title) {
+  return `<div class="empty-state"><div class="empty-icon">${icon("inbox")}</div><h2>${escapeHtml(title)}</h2></div>`;
 }
 
 function statusClass(status) {
@@ -59,7 +58,7 @@ function homeView(state) {
   const allEmpty = !state.clients.length && !state.deals.length && !state.tasks.length;
   let html = `<section class="metrics"><button type="button" data-go="clients"><span class="metric-icon blue">${icon("users")}</span><strong>${state.clients.length}</strong><span>Клиенты</span></button><button type="button" data-go="deals"><span class="metric-icon violet">${icon("briefcase")}</span><strong>${activeDeals.length}</strong><span>В работе</span></button><button type="button" data-go="tasks"><span class="metric-icon green">${icon("check-circle")}</span><strong>${openTasks.length}</strong><span>Задачи</span></button></section>`;
   html += `<section class="balance-card"><span>Активные сделки</span><strong>${formatMoney(total)}</strong><small>${activeDeals.length ? `${activeDeals.length} ${activeDeals.length === 1 ? "сделка" : "сделки"}` : "Пока нет сделок"}</small></section>`;
-  if (allEmpty) return html + section("Начало работы", emptyState("CRM пока пустая", "Добавьте демо-данные, чтобы оценить интерфейс."));
+  if (allEmpty) return html + section("Начало работы", emptyState("CRM пока пустая"));
   if (openTasks.length) html += section("Ближайшие задачи", taskList(openTasks.slice(0, 3)), '<button class="section-link" type="button" data-go="tasks">Все</button>');
   if (activeDeals.length) html += section("Активные сделки", dealList(activeDeals.slice(0, 3), state), '<button class="section-link" type="button" data-go="deals">Все</button>');
   return html;
@@ -69,12 +68,12 @@ export function renderView(tab, state, query = "") {
   if (tab === "home") return homeView(state);
   if (tab === "clients") {
     const items = state.clients.filter((item) => matches(query, item.name, item.phone, item.note, item.status));
-    return items.length ? section("Все клиенты", clientList(items)) : emptyState("Клиентов нет", query ? "По вашему запросу ничего не найдено." : "Добавьте первого клиента.", !query);
+    return items.length ? section("Все клиенты", clientList(items)) : emptyState(query ? "Ничего не найдено" : "Клиентов нет");
   }
   if (tab === "deals") {
     const items = state.deals.filter((item) => matches(query, item.title, item.amount, item.status, state.clients.find((client) => client.id === item.clientId)?.name));
-    return items.length ? section("Все сделки", dealList(items, state)) : emptyState("Сделок нет", query ? "По вашему запросу ничего не найдено." : "Создайте первую сделку.", !query);
+    return items.length ? section("Все сделки", dealList(items, state)) : emptyState(query ? "Ничего не найдено" : "Сделок нет");
   }
   const items = state.tasks.filter((item) => matches(query, item.title, item.note, item.date));
-  return items.length ? section("Все задачи", taskList(items)) : emptyState("Задач нет", query ? "По вашему запросу ничего не найдено." : "Добавьте первую задачу.", !query);
+  return items.length ? section("Все задачи", taskList(items)) : emptyState(query ? "Ничего не найдено" : "Задач нет");
 }

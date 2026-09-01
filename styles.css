@@ -9,8 +9,11 @@
   --accent-text: var(--tg-theme-button-text-color, #ffffff);
   --bottom-bg: var(--tg-theme-bottom-bar-bg-color, var(--surface));
   --separator: color-mix(in srgb, var(--hint) 24%, transparent);
-  --safe-top: max(env(safe-area-inset-top), var(--tg-safe-area-inset-top, 0px), var(--tg-content-safe-area-inset-top, 0px));
-  --safe-bottom: max(env(safe-area-inset-bottom), var(--tg-safe-area-inset-bottom, 0px), var(--tg-content-safe-area-inset-bottom, 0px));
+  /* Telegram content insets include space occupied by its own fullscreen controls. */
+  --safe-top: max(env(safe-area-inset-top, 0px), var(--app-inset-top, var(--tg-content-safe-area-inset-top, var(--tg-safe-area-inset-top, 0px))));
+  --safe-right: max(env(safe-area-inset-right, 0px), var(--app-inset-right, var(--tg-content-safe-area-inset-right, var(--tg-safe-area-inset-right, 0px))));
+  --safe-bottom: max(env(safe-area-inset-bottom, 0px), var(--app-inset-bottom, var(--tg-content-safe-area-inset-bottom, var(--tg-safe-area-inset-bottom, 0px))));
+  --safe-left: max(env(safe-area-inset-left, 0px), var(--app-inset-left, var(--tg-content-safe-area-inset-left, var(--tg-safe-area-inset-left, 0px))));
   --green: #34c759;
   --orange: #ff9f0a;
   --red: #ff453a;
@@ -27,7 +30,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 [hidden] { display: none !important; }
 .icon { display: block; width: 24px; height: 24px; }
 
-.app-shell { width: min(100%, 620px); min-height: var(--tg-viewport-stable-height, 100dvh); margin: 0 auto; padding: calc(var(--safe-top) + 8px) 12px calc(146px + var(--safe-bottom)); }
+.app-shell { width: min(100%, 620px); min-height: var(--tg-viewport-stable-height, 100dvh); margin: 0 auto; padding: calc(var(--safe-top) + 12px) calc(var(--safe-right) + 12px) calc(146px + var(--safe-bottom)) calc(var(--safe-left) + 12px); }
 .telegram .app-shell { padding-bottom: calc(82px + var(--safe-bottom)); }
 .topbar { display: flex; align-items: center; justify-content: space-between; min-height: 58px; padding: 4px 4px 10px; }
 .app-name { display: block; margin-bottom: 1px; color: var(--accent); font-size: 11px; line-height: 14px; font-weight: 700; letter-spacing: .04em; }
@@ -45,7 +48,7 @@ h2 { margin: 0; font-size: 15px; line-height: 20px; }
 
 .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .metrics button { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; min-height: 112px; padding: 12px; border: 0; border-radius: 14px; background: var(--surface); text-align: left; }
-.metrics button:active, .native-row:active, .soft-button:active { opacity: .64; }
+.metrics button:active, .native-row:active { opacity: .64; }
 .metric-icon { display: grid; place-items: center; width: 30px; height: 30px; margin-bottom: 10px; border-radius: 9px; color: white; }
 .metric-icon .icon { width: 18px; height: 18px; }
 .metric-icon.blue { background: var(--accent); }
@@ -96,8 +99,6 @@ h2 { margin: 0; font-size: 15px; line-height: 20px; }
 .empty-icon { display: grid; place-items: center; width: 58px; height: 58px; margin: 0 auto 13px; border-radius: 18px; background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent); }
 .empty-icon .icon { width: 30px; height: 30px; }
 .empty-state h2 { font-size: 17px; }
-.empty-state p { max-width: 290px; margin: 6px auto 16px; color: var(--hint); font-size: 14px; line-height: 19px; }
-.soft-button { min-height: 38px; padding: 0 13px; border: 0; border-radius: 10px; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); font-size: 14px; font-weight: 600; }
 
 .tabbar { position: fixed; z-index: 10; right: 0; bottom: 0; left: 0; display: grid; grid-template-columns: repeat(4, 1fr); max-width: 620px; min-height: calc(62px + var(--safe-bottom)); margin: auto; padding: 6px 4px var(--safe-bottom); border-top: .5px solid var(--separator); background: color-mix(in srgb, var(--bottom-bg) 92%, transparent); backdrop-filter: saturate(180%) blur(18px); -webkit-backdrop-filter: saturate(180%) blur(18px); }
 .tab { display: flex; min-width: 0; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 2px; border: 0; background: transparent; color: var(--hint); font-size: 10px; }
