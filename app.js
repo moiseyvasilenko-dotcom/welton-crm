@@ -1,8 +1,8 @@
-import { editorTemplate } from "./js/forms.js";
-import { mountStaticIcons } from "./js/icons.js";
-import { CrmStore } from "./js/store.js";
-import { TelegramBridge } from "./js/telegram.js";
-import { renderView } from "./js/views.js";
+import { editorTemplate } from "./js/forms.js?v=3";
+import { mountStaticIcons } from "./js/icons.js?v=3";
+import { CrmStore } from "./js/store.js?v=3";
+import { TelegramBridge } from "./js/telegram.js?v=3";
+import { renderView } from "./js/views.js?v=3";
 
 const labels = { home: "Обзор", clients: "Клиенты", deals: "Сделки", tasks: "Задачи" };
 const actions = { home: "Добавить клиента", clients: "Добавить клиента", deals: "Добавить сделку", tasks: "Добавить задачу" };
