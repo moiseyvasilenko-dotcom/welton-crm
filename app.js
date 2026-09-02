@@ -1,12 +1,12 @@
-import { editorTemplate } from "./js/forms.js?v=4";
-import { mountStaticIcons } from "./js/icons.js?v=4";
-import { CrmStore } from "./js/store.js?v=4";
-import { TelegramBridge } from "./js/telegram.js?v=4";
-import { renderView } from "./js/views.js?v=4";
+import { editorTemplate } from "./js/forms.js";
+import { mountStaticIcons } from "./js/icons.js";
+import { CrmStore } from "./js/store.js";
+import { TelegramBridge } from "./js/telegram.js";
+import { renderView } from "./js/views.js";
 
-const screens = { home: "Обзор", clients: "Клиенты", deals: "Сделки", tasks: "Задачи" };
-const actions = { clients: "Добавить клиента", deals: "Добавить сделку", tasks: "Добавить задачу" };
-const typeForScreen = { clients: "client", deals: "deal", tasks: "task" };
+const labels = { home: "Обзор", clients: "Клиенты", deals: "Сделки", tasks: "Задачи" };
+const actions = { home: "Добавить клиента", clients: "Добавить клиента", deals: "Добавить сделку", tasks: "Добавить задачу" };
+const typeForTab = { home: "client", clients: "client", deals: "deal", tasks: "task" };
 const editorTitles = {
   client: ["Новый клиент", "Клиент"],
   deal: ["Новая сделка", "Сделка"],
@@ -18,7 +18,6 @@ const telegram = new TelegramBridge();
 const elements = {
   content: document.querySelector("#content"),
   pageTitle: document.querySelector("#pageTitle"),
-  backButton: document.querySelector("#backButton"),
   searchToggle: document.querySelector("#searchToggle"),
   searchPanel: document.querySelector("#searchPanel"),
   searchInput: document.querySelector("#searchInput"),
@@ -32,50 +31,36 @@ const elements = {
   toast: document.querySelector("#toast"),
 };
 
-let screen = "home";
+let currentTab = "home";
 let query = "";
 let editing = null;
 let toastTimer = null;
 
 function render() {
-  elements.pageTitle.textContent = screens[screen];
-  elements.content.innerHTML = renderView(screen, store.state, query);
-  updateTopbar();
+  elements.pageTitle.textContent = labels[currentTab];
+  elements.content.innerHTML = renderView(currentTab, store.state, query);
+  document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("active", tab.dataset.tab === currentTab));
+  updateMainAction();
 }
 
-function updateTopbar() {
-  const action = editing ? null : actions[screen] || null;
-  const showBack = Boolean(editing) || screen !== "home" || !elements.searchPanel.hidden;
-  elements.backButton.hidden = !showBack;
-  telegram.showBack(showBack);
-  if (editing) telegram.setMain("Сохранить", true);
-  else if (action) telegram.setMain(action, true);
-  else telegram.setMain("", false);
-  if (action) {
-    elements.fallbackMain.lastElementChild.textContent = action;
-    elements.fallbackMain.hidden = false;
-  } else {
-    elements.fallbackMain.hidden = true;
-  }
+function updateMainAction() {
+  const text = editing ? "Сохранить" : actions[currentTab];
+  elements.fallbackMain.lastElementChild.textContent = actions[currentTab];
+  telegram.setMain(text, true);
 }
 
-function openScreen(next) {
-  if (!screens[next] || next === screen) return;
-  screen = next;
+function switchTab(tab) {
+  if (!labels[tab] || tab === currentTab) return;
+  currentTab = tab;
   closeSearch(false);
   render();
   telegram.selection();
 }
 
-function goHome() {
-  if (screen !== "home") return openScreen("home");
-  closeSearch();
-}
-
 function openSearch() {
   elements.searchPanel.hidden = false;
   elements.searchToggle.hidden = true;
-  updateTopbar();
+  telegram.showBack(true);
   requestAnimationFrame(() => elements.searchInput.focus());
 }
 
@@ -85,8 +70,8 @@ function closeSearch(shouldRender = true) {
   elements.clearSearch.hidden = true;
   elements.searchPanel.hidden = true;
   elements.searchToggle.hidden = false;
+  if (!editing) telegram.showBack(false);
   if (shouldRender) render();
-  else updateTopbar();
 }
 
 function openEditor(type, record = null) {
@@ -103,23 +88,22 @@ function openEditor(type, record = null) {
 function closeEditor() {
   if (elements.dialog.open) elements.dialog.close();
   editing = null;
-  updateTopbar();
+  telegram.showBack(!elements.searchPanel.hidden);
+  updateMainAction();
 }
 
-function openEditorForCurrentScreen() {
-  const type = typeForScreen[screen];
-  if (type) openEditor(type);
+function openEditorForCurrentTab() {
+  openEditor(typeForTab[currentTab]);
 }
 
 function handleMainAction() {
   if (editing) elements.form.requestSubmit();
-  else openEditorForCurrentScreen();
+  else openEditorForCurrentTab();
 }
 
 function handleBackAction() {
   if (editing) closeEditor();
   else if (!elements.searchPanel.hidden) closeSearch();
-  else goHome();
 }
 
 function saveEditor() {
@@ -148,7 +132,7 @@ function editFromElement(target) {
 
 function handleContentClick(event) {
   const go = event.target.closest("[data-go]");
-  if (go) return openScreen(go.dataset.go);
+  if (go) return switchTab(go.dataset.go);
 
   if (event.target.closest("[data-action='demo']")) {
     store.seedDemo();
@@ -171,8 +155,8 @@ function handleContentClick(event) {
 }
 
 function bindEvents() {
-  elements.backButton.addEventListener("click", handleBackAction);
-  elements.fallbackMain.addEventListener("click", openEditorForCurrentScreen);
+  document.querySelectorAll(".tab").forEach((tab) => tab.addEventListener("click", () => switchTab(tab.dataset.tab)));
+  elements.fallbackMain.addEventListener("click", openEditorForCurrentTab);
   elements.searchToggle.addEventListener("click", openSearch);
   elements.clearSearch.addEventListener("click", () => {
     elements.searchInput.value = "";
@@ -199,7 +183,8 @@ function bindEvents() {
   elements.dialog.addEventListener("close", () => {
     if (editing) {
       editing = null;
-      updateTopbar();
+      telegram.showBack(!elements.searchPanel.hidden);
+      updateMainAction();
     }
   });
 }

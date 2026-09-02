@@ -30,11 +30,9 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 [hidden] { display: none !important; }
 .icon { display: block; width: 24px; height: 24px; }
 
-.app-shell { width: min(100%, 620px); min-height: var(--tg-viewport-stable-height, 100dvh); margin: 0 auto; padding: calc(var(--safe-top) + 12px) calc(var(--safe-right) + 12px) calc(24px + var(--safe-bottom)) calc(var(--safe-left) + 12px); }
-.telegram .app-shell { padding-bottom: calc(112px + var(--safe-bottom)); }
-.topbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 58px; padding: 4px 4px 10px; }
-.topbar-copy { flex: 1; min-width: 0; }
-#backButton[hidden] + .topbar-copy { margin-left: 0; }
+.app-shell { width: min(100%, 620px); min-height: var(--tg-viewport-stable-height, 100dvh); margin: 0 auto; padding: calc(var(--safe-top) + 12px) calc(var(--safe-right) + 12px) calc(146px + var(--safe-bottom)) calc(var(--safe-left) + 12px); }
+.telegram .app-shell { padding-bottom: calc(82px + var(--safe-bottom)); }
+.topbar { display: flex; align-items: center; justify-content: space-between; min-height: 58px; padding: 4px 4px 10px; }
 .app-name { display: block; margin-bottom: 1px; color: var(--accent); font-size: 11px; line-height: 14px; font-weight: 700; letter-spacing: .04em; }
 h1 { margin: 0; font-size: 28px; line-height: 32px; letter-spacing: -.025em; }
 h2 { margin: 0; font-size: 15px; line-height: 20px; }
@@ -102,14 +100,15 @@ h2 { margin: 0; font-size: 15px; line-height: 20px; }
 .empty-icon .icon { width: 30px; height: 30px; }
 .empty-state h2 { font-size: 17px; }
 
-.icon-tile { border-radius: 12px; }
-.icon-tile.blue { background: var(--accent); }
-.icon-tile.violet { background: var(--violet); }
-.icon-tile.green { background: var(--green); }
-
-.fallback-main { position: fixed; z-index: 11; right: 12px; bottom: calc(12px + var(--safe-bottom)); left: 12px; display: flex; align-items: center; justify-content: center; gap: 7px; max-width: 596px; min-height: 48px; margin: auto; border: 0; border-radius: 12px; background: var(--accent); color: var(--accent-text); font-size: 15px; font-weight: 600; box-shadow: 0 7px 22px #0002; }
+.tabbar { position: fixed; z-index: 10; right: 0; bottom: 0; left: 0; display: grid; grid-template-columns: repeat(4, 1fr); max-width: 620px; min-height: calc(62px + var(--safe-bottom)); margin: auto; padding: 6px 4px var(--safe-bottom); border-top: 1px solid var(--separator); background: var(--bottom-bg); }
+.tab { display: flex; min-width: 0; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 2px; border: 0; background: transparent; color: var(--hint); font-size: 10px; }
+.tab-icon { position: relative; display: grid; place-items: center; width: 30px; height: 25px; }
+.tab-icon .icon { width: 23px; height: 23px; stroke-width: 1.75; }
+.tab.active { color: var(--accent); }
+.tab.active .tab-icon::before { position: absolute; inset: 0 -3px; z-index: -1; border-radius: 12px; background: color-mix(in srgb, var(--accent) 11%, transparent); content: ""; }
+.fallback-main { position: fixed; z-index: 11; right: 12px; bottom: calc(72px + var(--safe-bottom)); left: 12px; display: flex; align-items: center; justify-content: center; gap: 7px; max-width: 596px; min-height: 48px; margin: auto; border: 0; border-radius: 12px; background: var(--accent); color: var(--accent-text); font-size: 15px; font-weight: 600; box-shadow: 0 7px 22px #0002; }
 .fallback-main .icon { width: 20px; height: 20px; }
-.telegram .fallback-main { display: none !important; }
+.telegram .fallback-main { display: none; }
 
 #editorDialog { inset: 0; width: min(100%, 620px); max-width: 620px; height: 100dvh; max-height: 100dvh; margin: 0 auto; padding: 0; overflow-y: auto; border: 0; border-radius: 0; background: var(--bg); color: var(--text); }
 #editorDialog::backdrop { background: var(--bg); }

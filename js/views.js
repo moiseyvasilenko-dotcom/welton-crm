@@ -1,5 +1,5 @@
-import { icon } from "./icons.js?v=4";
-import { escapeHtml, formatDate, formatMoney, initials, plural } from "./utils.js?v=4";
+import { icon } from "./icons.js";
+import { escapeHtml, formatDate, formatMoney, initials } from "./utils.js";
 
 function section(title, content, action = "") {
   return `<section class="content-section"><header class="section-head"><h2>${escapeHtml(title)}</h2>${action}</header>${content}</section>`;
@@ -51,49 +51,29 @@ function matches(query, ...values) {
   return !query || values.some((value) => String(value || "").toLowerCase().includes(query));
 }
 
-function hubView(state) {
+function homeView(state) {
   const activeDeals = state.deals.filter((deal) => !["Успешно", "Отказ"].includes(deal.status));
   const openTasks = state.tasks.filter((task) => !task.done);
   const total = activeDeals.reduce((sum, deal) => sum + Number(deal.amount || 0), 0);
   const allEmpty = !state.clients.length && !state.deals.length && !state.tasks.length;
-  let html = `<section class="balance-card"><span>Активные сделки</span><strong>${formatMoney(total)}</strong><small>${activeDeals.length ? plural(activeDeals.length, "сделка", "сделки", "сделок") : "Пока нет сделок"}</small></section>`;
-  html += section("Разделы", `<div class="native-list">
-    ${rowShell({ leading: `<span class="glyph icon-tile blue">${icon("users")}</span>`, title: "Клиенты", subtitle: plural(state.clients.length, "запись", "записи", "записей"), attrs: `data-go="clients"` })}
-    ${rowShell({ leading: `<span class="glyph icon-tile violet">${icon("briefcase")}</span>`, title: "Сделки", subtitle: `${activeDeals.length} в работе из ${state.deals.length}`, attrs: `data-go="deals"` })}
-    ${rowShell({ leading: `<span class="glyph icon-tile green">${icon("check-circle")}</span>`, title: "Задачи", subtitle: `${openTasks.length ? plural(openTasks.length, "открытая", "открытые", "открытых") : "все закрыты"}`, attrs: `data-go="tasks"` })}
-  </div>`);
+  let html = `<section class="metrics"><button type="button" data-go="clients"><span class="metric-icon blue">${icon("users")}</span><strong>${state.clients.length}</strong><span>Клиенты</span></button><button type="button" data-go="deals"><span class="metric-icon violet">${icon("briefcase")}</span><strong>${activeDeals.length}</strong><span>В работе</span></button><button type="button" data-go="tasks"><span class="metric-icon green">${icon("check-circle")}</span><strong>${openTasks.length}</strong><span>Задачи</span></button></section>`;
+  html += `<section class="balance-card"><span>Активные сделки</span><strong>${formatMoney(total)}</strong><small>${activeDeals.length ? `${activeDeals.length} ${activeDeals.length === 1 ? "сделка" : "сделки"}` : "Пока нет сделок"}</small></section>`;
   if (allEmpty) return html + section("Начало работы", emptyState("CRM пока пустая"));
-  if (openTasks.length) html += section("Ближайшие задачи", taskList(openTasks.slice(0, 3)), `<button class="section-link" type="button" data-go="tasks">Все</button>`);
-  if (activeDeals.length) html += section("Активные сделки", dealList(activeDeals.slice(0, 3), state), `<button class="section-link" type="button" data-go="deals">Все</button>`);
+  if (openTasks.length) html += section("Ближайшие задачи", taskList(openTasks.slice(0, 3)), '<button class="section-link" type="button" data-go="tasks">Все</button>');
+  if (activeDeals.length) html += section("Активные сделки", dealList(activeDeals.slice(0, 3), state), '<button class="section-link" type="button" data-go="deals">Все</button>');
   return html;
 }
 
-function globalSearch(state, query) {
-  const clients = state.clients.filter((item) => matches(query, item.name, item.phone, item.note, item.status));
-  const deals = state.deals.filter((item) => matches(query, item.title, item.amount, item.status, state.clients.find((client) => client.id === item.clientId)?.name));
-  const tasks = state.tasks.filter((item) => matches(query, item.title, item.note, item.date));
-  let html = "";
-  if (clients.length) html += section(`Клиенты · ${clients.length}`, clientList(clients));
-  if (deals.length) html += section(`Сделки · ${deals.length}`, dealList(deals, state));
-  if (tasks.length) html += section(`Задачи · ${tasks.length}`, taskList(tasks));
-  return html || `<div class="empty-state"><div class="empty-icon">${icon("search")}</div><h2>Ничего не найдено</h2></div>`;
-}
-
-function screenList(listHtml, itemsCount, query, emptyTitle) {
-  if (!itemsCount) return emptyState(query ? "Ничего не найдено" : emptyTitle);
-  return section(query ? "Результаты" : "Все записи", listHtml);
-}
-
 export function renderView(tab, state, query = "") {
-  if (tab === "home") return query ? globalSearch(state, query) : hubView(state);
+  if (tab === "home") return homeView(state);
   if (tab === "clients") {
     const items = state.clients.filter((item) => matches(query, item.name, item.phone, item.note, item.status));
-    return screenList(clientList(items), items.length, query, "Клиентов нет");
+    return items.length ? section("Все клиенты", clientList(items)) : emptyState(query ? "Ничего не найдено" : "Клиентов нет");
   }
   if (tab === "deals") {
     const items = state.deals.filter((item) => matches(query, item.title, item.amount, item.status, state.clients.find((client) => client.id === item.clientId)?.name));
-    return screenList(dealList(items, state), items.length, query, "Сделок нет");
+    return items.length ? section("Все сделки", dealList(items, state)) : emptyState(query ? "Ничего не найдено" : "Сделок нет");
   }
   const items = state.tasks.filter((item) => matches(query, item.title, item.note, item.date));
-  return screenList(taskList(items), items.length, query, "Задач нет");
+  return items.length ? section("Все задачи", taskList(items)) : emptyState(query ? "Ничего не найдено" : "Задач нет");
 }

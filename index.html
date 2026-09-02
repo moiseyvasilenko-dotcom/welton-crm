@@ -5,18 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#ffffff">
   <title>Welton CRM</title>
-  <link rel="stylesheet" href="./styles.css?v=4">
+  <link rel="stylesheet" href="./styles.css?v=3">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
-      <button class="round-button" id="backButton" type="button" aria-label="Назад" hidden><span data-icon="back"></span></button>
       <div class="topbar-copy">
         <span class="app-name">Welton CRM</span>
         <h1 id="pageTitle">Обзор</h1>
       </div>
-      <button class="round-button" id="searchToggle" type="button" aria-label="Открыть поиск"><span data-icon="search"></span></button>
+      <button class="round-button" id="searchToggle" type="button" aria-label="Открыть поиск">
+        <span data-icon="search"></span>
+      </button>
     </header>
 
     <section class="search-wrap" id="searchPanel" hidden>
@@ -28,11 +29,18 @@
     </section>
 
     <main id="content" aria-live="polite"></main>
-  </div>
 
-  <button id="fallbackMainButton" class="fallback-main" type="button" hidden>
-    <span data-icon="plus"></span><span>Добавить</span>
-  </button>
+    <nav class="tabbar" aria-label="Разделы">
+      <button class="tab active" type="button" data-tab="home"><span class="tab-icon" data-icon="home"></span><span>Обзор</span></button>
+      <button class="tab" type="button" data-tab="clients"><span class="tab-icon" data-icon="users"></span><span>Клиенты</span></button>
+      <button class="tab" type="button" data-tab="deals"><span class="tab-icon" data-icon="briefcase"></span><span>Сделки</span></button>
+      <button class="tab" type="button" data-tab="tasks"><span class="tab-icon" data-icon="check-circle"></span><span>Задачи</span></button>
+    </nav>
+
+    <button id="fallbackMainButton" class="fallback-main" type="button">
+      <span data-icon="plus"></span><span>Добавить клиента</span>
+    </button>
+  </div>
 
   <dialog id="editorDialog" aria-labelledby="dialogTitle">
     <form id="editorForm">
@@ -46,6 +54,6 @@
   </dialog>
 
   <div id="toast" class="toast" role="status" hidden></div>
-  <script type="module" src="./app.js?v=4"></script>
+  <script type="module" src="./app.js?v=3"></script>
 </body>
 </html>
