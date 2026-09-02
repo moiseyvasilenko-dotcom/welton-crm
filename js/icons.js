@@ -13,6 +13,7 @@ const paths = {
   inbox: '<path d="M4 4h16l2 11v5H2v-5L4 4Z"/><path d="M2 15h5l2 3h6l2-3h5"/>',
   'close-circle': '<circle cx="12" cy="12" r="9" fill="currentColor" stroke="none" opacity=".18"/><path d="m9 9 6 6m0-6-6 6"/>',
   check: '<path d="m5 12 4 4L19 6"/>',
+  back: '<path d="M19 12H5"/><path d="m12 19-7-7 7-7"/>',
 };
 
 export function icon(name, className = "") {

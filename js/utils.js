@@ -23,3 +23,10 @@ export function formatDate(value) {
   if (!value) return "Без срока";
   return new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "short" }).format(new Date(`${value}T12:00:00`));
 }
+
+export function plural(count, one, few, many) {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  const word = mod10 === 1 && mod100 !== 11 ? one : mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20) ? few : many;
+  return `${count} ${word}`;
+}
