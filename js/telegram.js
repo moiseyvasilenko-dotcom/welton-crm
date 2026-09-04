@@ -54,7 +54,14 @@ export class TelegramBridge {
   }
 
   setMain(text, visible = true) {
-    this.webApp?.MainButton?.setParams({ text, is_active: true, is_visible: visible });
+    const btn = this.webApp?.MainButton;
+    if (!btn) return;
+    if (visible) {
+      btn.setText(text);
+      btn.show();
+    } else {
+      btn.hide();
+    }
   }
 
   showBack(show = true) {

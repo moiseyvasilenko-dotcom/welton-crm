@@ -1,11 +1,10 @@
-import { editorTemplate } from "./js/forms.js?v=5";
-import { mountStaticIcons } from "./js/icons.js?v=5";
-import { CrmStore } from "./js/store.js?v=5";
-import { TelegramBridge } from "./js/telegram.js?v=5";
-import { renderView } from "./js/views.js?v=5";
+import { editorTemplate } from "./js/forms.js?v=6";
+import { mountStaticIcons } from "./js/icons.js?v=6";
+import { CrmStore } from "./js/store.js?v=6";
+import { TelegramBridge } from "./js/telegram.js?v=6";
+import { renderView } from "./js/views.js?v=6";
 
 const labels = { home: "Обзор", clients: "Клиенты", deals: "Сделки", tasks: "Задачи" };
-const actions = { home: "Добавить клиента", clients: "Добавить клиента", deals: "Добавить сделку", tasks: "Добавить задачу" };
 const typeForTab = { home: "client", clients: "client", deals: "deal", tasks: "task" };
 const editorTitles = {
   client: ["Новый клиент", "Клиент"],
@@ -78,6 +77,7 @@ function openEditor(type, record = null) {
   elements.dialogTitle.textContent = editorTitles[type][record ? 1 : 0];
   elements.formFields.innerHTML = editorTemplate(type, record, store.state.clients);
   elements.dialog.showModal();
+  elements.fallbackMain.hidden = true;
   telegram.showBack(true);
   telegram.setMain("Сохранить", true);
   telegram.impact("medium");
@@ -87,6 +87,7 @@ function openEditor(type, record = null) {
 function closeEditor() {
   if (elements.dialog.open) elements.dialog.close();
   editing = null;
+  elements.fallbackMain.hidden = false;
   telegram.showBack(!elements.searchPanel.hidden);
   updateMainAction();
 }

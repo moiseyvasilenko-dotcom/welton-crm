@@ -30,8 +30,8 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 [hidden] { display: none !important; }
 .icon { display: block; width: 24px; height: 24px; }
 
-.app-shell { width: min(100%, 620px); min-height: var(--tg-viewport-stable-height, 100dvh); margin: 0 auto; padding: calc(var(--safe-top) + 12px) calc(var(--safe-right) + 12px) calc(146px + var(--safe-bottom)) calc(var(--safe-left) + 12px); }
-.telegram .app-shell { padding-bottom: calc(82px + var(--safe-bottom)); }
+.app-shell { width: min(100%, 620px); min-height: var(--tg-viewport-stable-height, 100dvh); margin: 0 auto; padding: calc(var(--safe-top) + 12px) calc(var(--safe-right) + 12px) calc(170px + var(--safe-bottom)) calc(var(--safe-left) + 12px); }
+.telegram .app-shell { padding-bottom: calc(170px + var(--safe-bottom)); }
 .topbar { display: flex; align-items: center; justify-content: space-between; min-height: 58px; padding: 4px 4px 10px; }
 .app-name { display: block; margin-bottom: 1px; color: var(--accent); font-size: 11px; line-height: 14px; font-weight: 700; letter-spacing: .04em; }
 h1 { margin: 0; font-size: 28px; line-height: 32px; letter-spacing: -.025em; }
@@ -108,7 +108,7 @@ h2 { margin: 0; font-size: 15px; line-height: 20px; }
 .tab.active .tab-icon .icon { transform: translateY(-1px); }
 .tab.active::before { position: absolute; inset: 0; z-index: -1; border-radius: 16px; background: color-mix(in srgb, var(--accent) 13%, transparent); content: ""; }
 .tab:active { transform: scale(.94); }
-.fallback-main { position: fixed; z-index: 11; right: 16px; bottom: calc(88px + var(--safe-bottom)); display: grid; place-items: center; width: 56px; height: 56px; border: 0; border-radius: 50%; background: var(--accent); color: var(--accent-text); box-shadow: 0 8px 20px #0003; transition: transform .18s ease; }
+.fallback-main { position: fixed; z-index: 11; right: max(16px, calc(50% - 282px)); bottom: calc(88px + var(--safe-bottom)); display: grid; place-items: center; width: 56px; height: 56px; border: 0; border-radius: 50%; background: var(--accent); color: var(--accent-text); box-shadow: 0 8px 20px #0003; transition: transform .18s ease; }
 .fallback-main:active { transform: scale(.9); }
 .fallback-main .icon { width: 26px; height: 26px; }
 
