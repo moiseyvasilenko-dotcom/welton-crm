@@ -28,7 +28,7 @@ def api(method, payload=None, timeout=45):
 def send_launcher(chat_id):
     api("sendMessage", {
         "chat_id": chat_id,
-        "text": "Добро пожаловать в Welton CRM. Клиенты, сделки и задачи — в одном месте.",
+        "text": "Добро пожаловать. Клиенты, сделки и задачи — в одном месте.",
         "reply_markup": {
             "inline_keyboard": [[{
                 "text": "Открыть CRM",
