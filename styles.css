@@ -100,13 +100,15 @@ h2 { margin: 0; font-size: 15px; line-height: 20px; }
 .empty-icon .icon { width: 30px; height: 30px; }
 .empty-state h2 { font-size: 17px; }
 
-.tabbar { position: fixed; z-index: 10; right: 0; bottom: 0; left: 0; display: grid; grid-template-columns: repeat(4, 1fr); max-width: 620px; min-height: calc(62px + var(--safe-bottom)); margin: auto; padding: 6px 4px var(--safe-bottom); border-top: 1px solid var(--separator); background: var(--bottom-bg); }
-.tab { display: flex; min-width: 0; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 2px; border: 0; background: transparent; color: var(--hint); font-size: 10px; }
+.tabbar { position: fixed; z-index: 10; right: 0; bottom: calc(14px + var(--safe-bottom)); left: 0; display: flex; align-items: center; justify-content: space-between; gap: 2px; width: min(calc(100% - 24px), 596px); min-height: 62px; margin: auto; padding: 6px; border: 1px solid color-mix(in srgb, var(--hint) 12%, transparent); border-radius: 22px; background: color-mix(in srgb, var(--bottom-bg) 82%, transparent); box-shadow: 0 12px 34px #0002, 0 2px 8px #0001; backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); }
+.tab { position: relative; display: flex; min-width: 0; flex: 1; flex-direction: column; align-items: center; justify-content: center; gap: 3px; height: 50px; padding: 2px; border: 0; border-radius: 16px; background: transparent; color: var(--hint); font-size: 10px; font-weight: 500; transition: color .18s ease, background .18s ease, transform .18s ease; }
 .tab-icon { position: relative; display: grid; place-items: center; width: 30px; height: 25px; }
-.tab-icon .icon { width: 23px; height: 23px; stroke-width: 1.75; }
+.tab-icon .icon { width: 23px; height: 23px; stroke-width: 1.75; transition: transform .18s ease; }
 .tab.active { color: var(--accent); }
-.tab.active .tab-icon::before { position: absolute; inset: 0 -3px; z-index: -1; border-radius: 12px; background: color-mix(in srgb, var(--accent) 11%, transparent); content: ""; }
-.fallback-main { position: fixed; z-index: 11; right: 12px; bottom: calc(72px + var(--safe-bottom)); left: 12px; display: flex; align-items: center; justify-content: center; gap: 7px; max-width: 596px; min-height: 48px; margin: auto; border: 0; border-radius: 12px; background: var(--accent); color: var(--accent-text); font-size: 15px; font-weight: 600; box-shadow: 0 7px 22px #0002; }
+.tab.active .tab-icon .icon { transform: translateY(-1px); }
+.tab.active::before { position: absolute; inset: 0; z-index: -1; border-radius: 16px; background: color-mix(in srgb, var(--accent) 13%, transparent); content: ""; }
+.tab:active { transform: scale(.94); }
+.fallback-main { position: fixed; z-index: 11; right: 12px; bottom: calc(90px + var(--safe-bottom)); left: 12px; display: flex; align-items: center; justify-content: center; gap: 7px; max-width: 596px; min-height: 48px; margin: auto; border: 0; border-radius: 14px; background: var(--accent); color: var(--accent-text); font-size: 15px; font-weight: 600; box-shadow: 0 7px 22px #0002; }
 .fallback-main .icon { width: 20px; height: 20px; }
 .telegram .fallback-main { display: none; }
 

@@ -1,4 +1,4 @@
-import { makeId } from "./utils.js?v=3";
+import { makeId } from "./utils.js?v=4";
 
 const STORAGE_KEY = "welton-crm-v1";
 const emptyState = Object.freeze({ clients: [], deals: [], tasks: [] });
