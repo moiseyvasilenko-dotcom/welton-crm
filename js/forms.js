@@ -1,4 +1,4 @@
-import { escapeHtml } from "./utils.js?v=4";
+import { escapeHtml } from "./utils.js?v=5";
 
 function field(label, name, type = "text", value = "", attributes = "") {
   return `<label class="form-row"><span>${escapeHtml(label)}</span><input name="${name}" type="${type}" value="${escapeHtml(value)}" ${attributes}></label>`;

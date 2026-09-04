@@ -1,8 +1,8 @@
-import { editorTemplate } from "./js/forms.js?v=4";
-import { mountStaticIcons } from "./js/icons.js?v=4";
-import { CrmStore } from "./js/store.js?v=4";
-import { TelegramBridge } from "./js/telegram.js?v=4";
-import { renderView } from "./js/views.js?v=4";
+import { editorTemplate } from "./js/forms.js?v=5";
+import { mountStaticIcons } from "./js/icons.js?v=5";
+import { CrmStore } from "./js/store.js?v=5";
+import { TelegramBridge } from "./js/telegram.js?v=5";
+import { renderView } from "./js/views.js?v=5";
 
 const labels = { home: "Обзор", clients: "Клиенты", deals: "Сделки", tasks: "Задачи" };
 const actions = { home: "Добавить клиента", clients: "Добавить клиента", deals: "Добавить сделку", tasks: "Добавить задачу" };
@@ -44,9 +44,8 @@ function render() {
 }
 
 function updateMainAction() {
-  const text = editing ? "Сохранить" : actions[currentTab];
-  elements.fallbackMain.lastElementChild.textContent = actions[currentTab];
-  telegram.setMain(text, true);
+  if (editing) telegram.setMain("Сохранить", true);
+  else telegram.setMain("", false);
 }
 
 function switchTab(tab) {

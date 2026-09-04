@@ -1,5 +1,5 @@
-import { icon } from "./icons.js?v=4";
-import { escapeHtml, formatDate, formatMoney, initials } from "./utils.js?v=4";
+import { icon } from "./icons.js?v=5";
+import { escapeHtml, formatDate, formatMoney, initials } from "./utils.js?v=5";
 
 function section(title, content, action = "") {
   return `<section class="content-section"><header class="section-head"><h2>${escapeHtml(title)}</h2>${action}</header>${content}</section>`;

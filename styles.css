@@ -108,9 +108,9 @@ h2 { margin: 0; font-size: 15px; line-height: 20px; }
 .tab.active .tab-icon .icon { transform: translateY(-1px); }
 .tab.active::before { position: absolute; inset: 0; z-index: -1; border-radius: 16px; background: color-mix(in srgb, var(--accent) 13%, transparent); content: ""; }
 .tab:active { transform: scale(.94); }
-.fallback-main { position: fixed; z-index: 11; right: 12px; bottom: calc(90px + var(--safe-bottom)); left: 12px; display: flex; align-items: center; justify-content: center; gap: 7px; max-width: 596px; min-height: 48px; margin: auto; border: 0; border-radius: 14px; background: var(--accent); color: var(--accent-text); font-size: 15px; font-weight: 600; box-shadow: 0 7px 22px #0002; }
-.fallback-main .icon { width: 20px; height: 20px; }
-.telegram .fallback-main { display: none; }
+.fallback-main { position: fixed; z-index: 11; right: 16px; bottom: calc(88px + var(--safe-bottom)); display: grid; place-items: center; width: 56px; height: 56px; border: 0; border-radius: 50%; background: var(--accent); color: var(--accent-text); box-shadow: 0 8px 20px #0003; transition: transform .18s ease; }
+.fallback-main:active { transform: scale(.9); }
+.fallback-main .icon { width: 26px; height: 26px; }
 
 #editorDialog { inset: 0; width: min(100%, 620px); max-width: 620px; height: 100dvh; max-height: 100dvh; margin: 0 auto; padding: 0; overflow-y: auto; border: 0; border-radius: 0; background: var(--bg); color: var(--text); }
 #editorDialog::backdrop { background: var(--bg); }
